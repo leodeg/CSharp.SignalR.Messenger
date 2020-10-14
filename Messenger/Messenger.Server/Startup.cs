@@ -56,7 +56,7 @@ namespace Messenger.Server
 			app.UseEndpoints(endpoints =>
 			{
 				endpoints.MapControllers();
-				endpoints.MapHub<NotificationHub>("/notification");
+				endpoints.MapHub<MessageHub>("/messages");
 			});
 
 			app.UseSwagger();

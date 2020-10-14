@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 
 namespace Messenger.Server.Hubs
 {
-	public interface INotificationClient
+	public interface IMessageClient
 	{
-		Task Send(Message message);
+		Task Send(NewMessage message);
 	}
 }

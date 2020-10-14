@@ -8,7 +8,7 @@ namespace Messenger.Client.Console
 {
 	class Program
 	{
-		private const string URL = "http://localhost:2667/notification";
+		private const string URL = "http://localhost:2667/messages";
 
 		static async Task Main(string[] args)
 		{
@@ -20,8 +20,9 @@ namespace Messenger.Client.Console
 
 	public class Messenger
 	{
-		private const string SendMessage = "SendMessage";
+		private const string SendMessage = "SendToAll";
 		private const string SetName = "SetName";
+		private const string GetName = "GetName";
 		private HubConnection HubConnection;
 
 		public Messenger(string connectionUrl)
@@ -35,12 +36,13 @@ namespace Messenger.Client.Console
 
 		private void AssignOnSendEvent()
 		{
-			HubConnection.On<Message>("Send", message =>
+			HubConnection.On<NewMessage>("Send", message =>
 			{
 				System.Console.WriteLine();
-				System.Console.WriteLine($"New message from server");
+				System.Console.WriteLine($"New message");
+				System.Console.WriteLine($"Sender: {message.Sender}");
 				System.Console.WriteLine($"Title: {message.Title}");
-				System.Console.WriteLine($"Text: {message.Body}");
+				System.Console.WriteLine($"Text: {message.Text}");
 				System.Console.WriteLine();
 			});
 		}
@@ -84,12 +86,16 @@ namespace Messenger.Client.Console
 					System.Console.WriteLine("Name sent");
 					System.Console.WriteLine();
 				}
+				else if (input == "getname")
+				{
+					System.Console.WriteLine();
+				}
 				else
 				{
 					var message = new Message
 					{
 						Title = "New Message",
-						Body = input
+						Text = input
 					};
 
 					await HubConnection.SendAsync(SendMessage, message);
