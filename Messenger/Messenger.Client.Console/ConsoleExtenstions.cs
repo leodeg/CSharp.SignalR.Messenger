@@ -9,15 +9,14 @@ using System.Windows.Input;
 
 namespace Messenger.Client.Console
 {
-	class Program
-	{
-		private const string URL = "http://localhost:2667/messages";
 
-		static async Task Main(string[] args)
+	public static class ConsoleExtenstions
+	{
+		public static void Show(string text, ConsoleColor color)
 		{
-			IMessenger messenger = new Messenger(URL);
-			await messenger.ConnectAsync();
-			await messenger.StartChatAsync();
+			System.Console.ForegroundColor = color;
+			System.Console.WriteLine(text);
+			System.Console.ForegroundColor = ConsoleColor.White;
 		}
 	}
 }

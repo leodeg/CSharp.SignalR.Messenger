@@ -9,15 +9,14 @@ using System.Windows.Input;
 
 namespace Messenger.Client.Console
 {
-	class Program
-	{
-		private const string URL = "http://localhost:2667/messages";
 
-		static async Task Main(string[] args)
+	class GetNameCommand : IHubCommand
+	{
+		public async Task<bool> Execute(HubConnection hubConnection, string methodName)
 		{
-			IMessenger messenger = new Messenger(URL);
-			await messenger.ConnectAsync();
-			await messenger.StartChatAsync();
+			string name = await hubConnection.InvokeAsync<string>(methodName);
+			ConsoleExtenstions.Show($"\nYour name: {name}\n", ConsoleColor.Green);
+			return true;
 		}
 	}
 }
