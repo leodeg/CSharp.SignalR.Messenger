@@ -1,0 +1,148 @@
+﻿@{
+	ViewData["Title"] = "Home Page";
+}
+
+<section class="chat">
+
+	<div class="container">
+		@* ====== Chat ====== *@
+		<div class="row">
+			<div class="col-md-4">
+				@* ====== Message Form ====== *@
+				<form>
+					@* ====== State ====== *@
+					<div class="form-group">
+						<label>State:</label>
+						<label id="connectState">Disconnected</label>
+						<button id="connectButton" type="button" class="form-control" onclick="connect()">Connect</button>
+					</div>
+
+					@* ====== Name ====== *@
+					<div class="form-group">
+						<label for="name">Name</label>
+						<input id="name" type="text" class="form-control mb-2" placeholder="Anonymous">
+						<div class="d-flex justify-content-center">
+							<button type="button" class="form-control col-md-5 mx-2" onclick="getMyName()">Get</button>
+							<button type="button" class="form-control col-md-5 mx-2" onclick="setMyName()">Set</button>
+						</div>
+					</div>
+
+					@* ====== Message ====== *@
+					<div class="form-group">
+						<label for="message">Text</label>
+						<textarea id="message" class="form-control mb-2"></textarea>
+						<button type="button" class="form-control btn-block" onclick="sendMessage()">Send</button>
+					</div>
+				</form>
+			</div>
+
+			@* ====== All Messages ====== *@
+			<div class="col-md-8">
+				<div id="messages-content" class="bg-light p-4">
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+</section>
+
+@section Scripts
+{
+	<script type="text/javascript" src="~/js/microsoft-signalr/signalr.min.js"></script>
+	<script type="text/javascript">
+
+		const connection = new signalR.HubConnectionBuilder()
+			.withUrl("http://localhost:2667/messages")
+			.withAutomaticReconnect()
+			.build();
+
+		connection.on('Send', (message) => {
+			appendMessage(message.sender, message.text, 'black');
+		});
+
+		connection.onclose(error => {
+			console.log('Connection closed. ', error)
+		});
+
+		connection.onreconnecting(error => {
+			console.log('Connection reconnecting. ', error);
+		});
+
+		connection.onreconnected(connectionId => {
+			console.log('Connectin reconnected with id: ', connectionId);
+		});
+
+		function appendMessage(sender, message, color) {
+			document
+				.querySelector('#messages-content')
+				.insertAdjacentHTML("beforeend",
+					`<div style="color:${color}">
+							<p>Sender: ${sender}</p>
+							<p>Text: ${message}</p>
+						</div><br>`);
+		}
+
+		async function connect() {
+			if (connection.state === 'Disconnected') {
+				try {
+					await connection.start();
+				}
+				catch (error) {
+					console.log(error);
+				}
+				if (connection.state === 'Connected') {
+					document.querySelector('#connectState').textContent = 'Connected';
+					document.querySelector('#connectState').style.color = 'green';
+					document.querySelector('#connectButton').textContent = 'Disconnect';
+				}
+			} else if (connection.state === 'Connected') {
+				await connection.stop();
+				document.querySelector('#connectState').textContent = 'Disconnected';
+				document.querySelector('#connectState').style.color = 'red';
+				document.querySelector('#connectButton').textContent = 'Connect';
+			}
+		};
+
+		async function sendMessage() {
+			if (connection.state === 'Connected') {
+				let textArea = document.querySelector('#message');
+				let message = { text: textArea.value };
+
+				try {
+					await connection.send('SendToAll', message);
+					appendMessage('Me', message.text, 'green');
+				}
+				catch (error) {
+					console.log(error);
+				}
+
+				document.querySelector('#message').value = '';
+			}
+		}
+
+		async function getMyName() {
+			if (connection.state === 'Connected') {
+				try {
+					let myName = await connection.invoke('GetName');
+					document.querySelector('#name').value = myName;
+				}
+				catch (error) {
+					console.log(error);
+				}
+			}
+		}
+
+		async function setMyName() {
+			if (connection.state === 'Connected') {
+				try {
+					let name = document.querySelector('#name').value;
+					await connection.send('SetName', name);
+				}
+				catch (error) {
+					console.log(error);
+				}
+			}
+		}
+	</script>
+}

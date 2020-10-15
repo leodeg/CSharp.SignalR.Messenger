@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30523.141
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messenger.Client.Console", "Messenger.Client.Console\Messenger.Client.Console.csproj", "{8C2C5427-2C88-4DFD-B083-72098E93B208}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Messenger.Client.Console", "Messenger.Client.Console\Messenger.Client.Console.csproj", "{8C2C5427-2C88-4DFD-B083-72098E93B208}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messenger.Common", "Messenger.Common\Messenger.Common.csproj", "{F821C6A0-98A4-4CD9-BB5C-1F94D5120355}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Messenger.Common", "Messenger.Common\Messenger.Common.csproj", "{F821C6A0-98A4-4CD9-BB5C-1F94D5120355}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messenger.Server", "Messenger.Server\Messenger.Server.csproj", "{DBD82895-6976-4926-9963-35DD4E98D212}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Messenger.Server", "Messenger.Server\Messenger.Server.csproj", "{DBD82895-6976-4926-9963-35DD4E98D212}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messenger.Client.WinForms", "Messenger.Client.WinForms\Messenger.Client.WinForms.csproj", "{6B998372-AEC0-44D7-8D5A-290E0192FAC7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Messenger.Client.WinForms", "Messenger.Client.WinForms\Messenger.Client.WinForms.csproj", "{6B998372-AEC0-44D7-8D5A-290E0192FAC7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messenger.Client.Web", "Messenger.Client.Web\Messenger.Client.Web.csproj", "{AB7BCBD0-A5A5-40D7-8D6B-0555EB8A58A7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{6B998372-AEC0-44D7-8D5A-290E0192FAC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6B998372-AEC0-44D7-8D5A-290E0192FAC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6B998372-AEC0-44D7-8D5A-290E0192FAC7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB7BCBD0-A5A5-40D7-8D6B-0555EB8A58A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB7BCBD0-A5A5-40D7-8D6B-0555EB8A58A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB7BCBD0-A5A5-40D7-8D6B-0555EB8A58A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB7BCBD0-A5A5-40D7-8D6B-0555EB8A58A7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
